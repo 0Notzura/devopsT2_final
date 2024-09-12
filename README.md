@@ -1,28 +1,50 @@
-# DevopsT1
-Todo List App
-É um site de lista de tarefas com funcionalidades de registro de usuário, login, adição e visualização de tarefas.
-Ao fazer login, voce pode adicionar as tasks que voce quiser.
-A porta do frontend esta mapeada pra 80 e a do backend para a 3000
 
-Tecnologias Utilizadas
-    
-    Backend: Node.js, Express.js
-    
-    Frontend: HTML, CSS, JavaScript
-    
-    Banco de Dados: Arquivo JSON (db.json) para simulação de persistência de dados.
-    
-    Docker: Utilizado para criar containers isolados para o frontend, usando o nginx para servir os docs estaticos, e o backend, usando node.
-    
-    Docker Compose: usado pra conectar os dockerfiles
-    
-Como Usar
 
-  Clone este repositório: git clone https://github.com/0Notzura/devopsT1.git
-  
-  Entre no diretório do projeto: cd DevopsT1-main
-  
-  Execute docker compose up 
-  
-  Acesse http://localhost
-  
+# Deploy de Aplicação com Kubernetes no Minikube
+
+Este repositório contém uma aplicação composta por dois componentes: um backend e um frontend, ambos empacotados como imagens Docker e implantados em um cluster Kubernetes utilizando o Minikube.
+
+
+## Passos para Rodar a Aplicação
+
+### 1. Build das Imagens Docker
+
+O primeiro passo é construir as imagens Docker para o backend e frontend, utilizando o Docker local do Minikube. Para isso, execute o script `build-and-export.sh`:
+
+```bash
+./build-and-export.sh
+```
+
+Esse script faz o seguinte:
+
+- Configura o Docker para usar o ambiente do Minikube.
+- Constrói a imagem Docker do backend a partir do diretório `./backend`.
+- Constrói a imagem Docker do frontend a partir do diretório `./frontend`.
+- Lista as imagens Docker criadas para verificar se o processo foi bem-sucedido.
+
+### 2. Implantação no Cluster Kubernetes
+
+Após a construção das imagens, você pode implantar a aplicação no Kubernetes utilizando o script `deploy-to-minikube.sh`. Esse script aplica os arquivos de configuração YAML e configura o DNS local para acessar a aplicação.
+
+Para rodar o script de implantação, use:
+
+```bash
+./deploy-to-minikube.sh
+```
+
+Esse script faz o seguinte:
+
+- Aplica os arquivos de configuração Kubernetes para o backend (Deployment e Service).
+- Aplica os arquivos de configuração Kubernetes para o frontend (Deployment e Service).
+- Aplica a configuração do Ingress para gerenciar o roteamento das requisições externas.
+- Adiciona entradas no arquivo `/etc/hosts` do seu sistema (em Linux/macOS), permitindo o acesso às URLs personalizadas:
+  - `frontend.k8s.local` para acessar o frontend.
+  - `backend.k8s.local` para acessar o backend.
+
+### 3. Acessando a Aplicação
+
+Com a aplicação implantada e as entradas DNS configuradas, você pode acessar os serviços pelo navegador utilizando as seguintes URLs:
+
+- **Frontend:** [http://frontend.k8s.local](http://frontend.k8s.local)
+- **Backend:** [http://backend.k8s.local](http://backend.k8s.local)
+
