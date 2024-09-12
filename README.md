@@ -7,9 +7,15 @@ Este repositório contém uma aplicação composta por dois componentes: um back
 
 ## Passos para Rodar a Aplicação
 
-### 1. Build das Imagens Docker
+### 1. iniciar o minikube
+O primeiro passo é iniciar o minikube
+```bash
+minikube start
+```
 
-O primeiro passo é construir as imagens Docker para o backend e frontend, utilizando o Docker local do Minikube. Para isso, execute o script `build-and-export.sh`:
+### 2. Build das Imagens Docker
+
+O segundo passo é construir as imagens Docker para o backend e frontend, utilizando o Docker local do Minikube. Para isso, execute o script `build-and-export.sh`:
 
 ```bash
 ./build-and-export.sh
@@ -22,7 +28,7 @@ Esse script faz o seguinte:
 - Constrói a imagem Docker do frontend a partir do diretório `./frontend`.
 - Lista as imagens Docker criadas para verificar se o processo foi bem-sucedido.
 
-### 2. Implantação no Cluster Kubernetes
+### 3. Implantação no Cluster Kubernetes
 
 Após a construção das imagens, você pode implantar a aplicação no Kubernetes utilizando o script `deploy-to-minikube.sh`. Esse script aplica os arquivos de configuração YAML e configura o DNS local para acessar a aplicação.
 
